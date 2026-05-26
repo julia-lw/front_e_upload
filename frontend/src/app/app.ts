@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArquivoService } from './ArquivoService';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -14,7 +15,6 @@ export class App implements OnInit {
   
   mensagemSucesso: string = '';
   mensagemErro: string = '';
-  baseUrlImagens: string = 'http://localhost:3000/arquivo';
 
   constructor(private arquivoService: ArquivoService) {}
 
@@ -71,6 +71,26 @@ export class App implements OnInit {
         }
       });
     }
+  }
+
+  obterURLImagem(filename: string): string {
+    return `http://localhost:3000/files/${filename}`;
+  }
+
+  baixarImagem(filename: string) {
+    const url = this.obterURLImagem(filename);
+    fetch(url)
+      .then(response => response.blob())
+      .then(blob => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+        URL.revokeObjectURL(link.href);
+      })
+      .catch(() => {
+        this.exibirErro('Erro ao baixar o arquivo.');
+      });
   }
 
   private exibirSucesso(msg: string) {
