@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@nestjs/mapped-types": "*",
+    "@types/multer": "^2.1.0",
+    "multer": "^2.1.1"
+  }
+}
