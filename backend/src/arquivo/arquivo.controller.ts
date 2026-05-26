@@ -24,7 +24,7 @@ export class ArquivoController {
         },
       }),
       limits: {
-        fileSize: 5 * 1024 * 1024, // Limite de 5MB para uploads
+        fileSize: 5 * 1024 * 1024,
       },
       fileFilter: (req, file, cb) => {
         const allowedExts = ['.jpg', '.jpeg', '.png', '.tif', '.tiff'];

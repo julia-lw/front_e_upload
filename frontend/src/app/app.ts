@@ -2,24 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArquivoService } from './ArquivoService';
 
-
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule], // Necessário para usar *ngFor, *ngIf no HTML
+  imports: [CommonModule],
   templateUrl: './app.html',
 })
 export class App implements OnInit {
   arquivos: any[] = [];
   arquivoSelecionado: File | null = null;
   
-  // Variáveis para dar feedback visual ao usuário
   mensagemSucesso: string = '';
   mensagemErro: string = '';
+  baseUrlImagens: string = 'http://localhost:3000/uploads/';
 
   constructor(private arquivoService: ArquivoService) {}
 
-  // Esse método roda automaticamente assim que a tela abre
   ngOnInit() {
     this.carregarArquivos();
   }
@@ -35,7 +33,6 @@ export class App implements OnInit {
     });
   }
 
-  // Captura o arquivo quando o usuário escolhe no input
   aoSelecionarArquivo(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -52,11 +49,10 @@ export class App implements OnInit {
     this.arquivoService.upload(this.arquivoSelecionado).subscribe({
       next: (resposta) => {
         this.exibirSucesso(resposta.message);
-        this.arquivoSelecionado = null; // Limpa a seleção
-        this.carregarArquivos(); // Recarrega a lista para mostrar o novo arquivo
+        this.arquivoSelecionado = null;
+        this.carregarArquivos();
       },
       error: (erro) => {
-        // Captura as mensagens de erro do seu NestJS (Ex: Payload Too Large ou Bad Request)
         const msg = erro.error?.message || 'Ocorreu um erro no upload.';
         this.exibirErro(msg);
       }
@@ -68,7 +64,7 @@ export class App implements OnInit {
       this.arquivoService.remover(filename).subscribe({
         next: (resposta) => {
           this.exibirSucesso(resposta.message);
-          this.carregarArquivos(); // Atualiza a lista após deletar
+          this.carregarArquivos();
         },
         error: () => {
           this.exibirErro('Erro ao deletar o arquivo.');
@@ -77,7 +73,6 @@ export class App implements OnInit {
     }
   }
 
-  // Funções auxiliares para mostrar mensagens por 3 segundos
   private exibirSucesso(msg: string) {
     this.mensagemSucesso = msg;
     this.mensagemErro = '';

@@ -13,7 +13,6 @@ export class ArquivoService {
       fs.mkdirSync(this.pastaUpload, { recursive: true });
     }
   }
-  //Retorna os dados do arquivo após o upload
   create(arquivo: Express.Multer.File) {
     return {
       message: 'Arquivo enviado com sucesso!',
