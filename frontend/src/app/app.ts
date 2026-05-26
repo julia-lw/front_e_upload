@@ -14,7 +14,7 @@ export class App implements OnInit {
   
   mensagemSucesso: string = '';
   mensagemErro: string = '';
-  baseUrlImagens: string = 'http://localhost:3000/uploads/';
+  baseUrlImagens: string = 'http://localhost:3000/arquivo';
 
   constructor(private arquivoService: ArquivoService) {}
 

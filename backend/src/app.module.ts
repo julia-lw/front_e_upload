@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { ArquivoModule } from './arquivo/arquivo.module';
 
 @Module({
-  imports: [ArquivoModule],
+  imports: [ArquivoModule,],
   controllers: [AppController],
   providers: [AppService],
 })
